@@ -9,6 +9,22 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+// Импортировать модуль mongoose
+var mongoose = require('mongoose');
+
+// Установим подключение по умолчанию
+var mongoDB = 'ВСТАВИТЬ URL ВАШЕЙ БАЗЫ ДАННЫХ MongoDB';
+mongoose.connect(mongoDB);
+// Позволим Mongoose использовать глобальную библиотеку промисов
+mongoose.Promise = global.Promise;
+// Получение подключения по умолчанию
+var db = mongoose.connection;
+
+// Привязать подключение к событию ошибки  (получать сообщения об ошибках подключения)
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
